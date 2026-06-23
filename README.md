@@ -340,6 +340,38 @@ task-manager-api/
 
 ---
 
+### Logs de validação (aplicações rodando após refatoração)
+
+**Projeto 1 — code-smells-project:**
+```
+GET /              200  {'mensagem': 'Bem-vindo à API da Loja', 'versao': '1.0.0', 'endpoints': {...}}
+GET /health        200  {'status': 'ok', 'database': 'connected', 'counts': {'produtos': 10, 'usuarios': 3, 'pedidos': 2}}
+GET /produtos      200  2 produtos
+POST /login        200  ['dados', 'mensagem', 'sucesso']
+GET /usuarios      200  password_exposed=False
+```
+
+**Projeto 2 — ecommerce-api-legacy:**
+```
+{"level":"info","msg":"Banco inicializado com dados de seed."}
+GET /api/admin/financial-report   200  ['0', '1']
+POST /api/checkout (PAID)         200  {'msg': 'Sucesso', 'enrollment_id': 2}
+POST /api/checkout (DENIED)       400  'Pagamento recusado'
+DELETE /api/users/9999 (404)      404  {'error': 'Usuário não encontrado'}
+```
+
+**Projeto 3 — task-manager-api:**
+```
+GET /health        200  {'status': 'ok', 'timestamp': '2026-06-22 22:11:18'}
+GET /tasks         200  [{'id': 1, 'title': 'Tarefa teste', 'overdue': False, 'user_name': None, ...}]
+POST /users        201  password_exposed=False  {'id': 1, 'name': 'Ana', 'email': 'ana@test.com', ...}
+POST /login        200  token_len=64
+GET /reports/sum   200  ['generated_at', 'overdue', 'overview', 'recent_activity', 'tasks_by_priority', 'tasks_by_status', 'user_productivity']
+GET /tasks/9999    404  {'error': 'Task não encontrada'}
+```
+
+---
+
 ### Observações sobre a skill em stacks diferentes
 
 - **Python/Flask monolítico (Projeto 1):** a skill identificou a natureza "flat" dos 4 arquivos e planejou reestruturação completa para MVC. O catálogo de SQLi foi especialmente eficaz aqui, encontrando 20+ pontos de injeção.
