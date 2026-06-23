@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pkill -f \"python app.py\")",
+      "Bash(python app.py)",
+      "Bash(curl -s -X POST http://localhost:5000/admin/reset-db)",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST http://localhost:5000/admin/reset-db)",
+      "Bash(curl -s -X POST http://localhost:5000/admin/query -H 'Content-Type: application/json' -d '{\"sql\":\"SELECT * FROM usuarios\"}')",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:5000/admin/query -H 'Content-Type: application/json' -d '{\"sql\":\"SELECT * FROM usuarios\"}')",
+      "Bash(curl -s http://localhost:5000/health)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:5000/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@loja.com\",\"senha\":\"errada\"}')",
+      "Bash(curl -s -w \"\\\\nHTTP: %{http_code}\" -X POST http://localhost:5000/admin/reset-db)",
+      "Bash(curl -s -w '\\\\nHTTP: %{http_code}' -X POST http://localhost:5000/admin/query -H 'Content-Type: application/json' -d '{\"sql\":\"SELECT 1\"}')",
+      "Bash(curl -s -w \"\\\\nHTTP: %{http_code}\" http://localhost:5000/produtos/999)",
+      "Bash(curl -s -w '\\\\nHTTP: %{http_code}' -X POST http://localhost:5000/pedidos -H 'Content-Type: application/json' -d '{}')",
+      "Bash(npm install *)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}
